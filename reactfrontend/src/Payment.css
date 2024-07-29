@@ -1,0 +1,35 @@
+/* Payment.css */
+
+.payment-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .payment-box {
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+  .payment-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .payment-box .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .payment-box .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .payment-box .btn {
+    width: 100%;
+  }
+  
