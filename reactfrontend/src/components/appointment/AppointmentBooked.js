@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useUser } from './UserContext';
+import { useUser } from '../context/UserContext';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './AppointmentBooked.css';
 
@@ -12,7 +12,10 @@ const AppointmentBooked = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await axios.get(`/appointments/patient/${patientId}`);
+        const response = await axios.get(`/appointments/patient/${patientId}`, { auth: {
+          username: user.email,
+          password: user.password
+        }});
         console.log(response.data);
         setAppointments(response.data);
       } catch (error) {

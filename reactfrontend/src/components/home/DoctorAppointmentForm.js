@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import { useUser } from './UserContext';
+import { useUser } from '../context/UserContext';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './DoctorAppointmentForm.css'
 import { Carousel } from 'react-bootstrap';
@@ -34,21 +34,54 @@ const DoctorAppointmentForm = () => {
   }, [reviews.length]);
 
   useEffect(() => {
-    axios.get('/all_specializations')
-      .then(response => {
-        setSpecializations(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching specializations:', error);
-      });
+    
+    if (true) {
 
-    axios.get('/cities')
-      .then(response => {
-        setCities(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching cities:', error);
-      });
+      axios.get('/all_specializations')
+        .then(response => {
+          setSpecializations(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching specializations:', error);
+        });
+  
+  
+      axios.get('/cities')
+        .then(response => {
+          setCities(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching cities:', error);
+        });
+    } else {
+      console.log(user.email);
+      console.log(user.password);
+      let hj = user.email + ":PATIENT";
+      
+      axios.get('/all_specializations', { auth: {
+
+        username: hj,
+        password: user.password
+      }})
+        .then(response => {
+          setSpecializations(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching specializations:', error);
+        });
+  
+  
+      axios.get('/cities', { auth: {
+        username: user.email+":PATIENT",
+        password: user.password
+      }})
+        .then(response => {
+          setCities(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching cities:', error);
+        });
+    }
   }, []);
 
   const handleSpecializationChange = (event) => {
@@ -146,7 +179,7 @@ const DoctorAppointmentForm = () => {
       </div>
 
 
-      <hr class="custom-hr"></hr>
+      <hr className="custom-hr"></hr>
 
       <div className="mt-4">
       <h2 className='h2heading'>What Our Patients Say</h2>
@@ -166,7 +199,7 @@ const DoctorAppointmentForm = () => {
       </Carousel>
       </div>
 
-    <hr class="custom-hr"></hr>
+    <hr className="custom-hr"></hr>
 
 
       <footer className="bg-light text-center text-lg-start mt-4">

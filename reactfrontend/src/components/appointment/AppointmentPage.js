@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { useUser } from './UserContext'; 
+import { useUser } from '../context/UserContext'; 
 import { useNavigate } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './AppointmentPage.css';
@@ -14,7 +14,10 @@ const AppointmentPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`/doctors/${doctorId}`)
+    axios.get(`/doctors/${doctorId}`, { auth: {
+      username: user.email,
+      password: user.password
+    }})
       .then(response => {
         setDoctor(response.data);
       })
@@ -22,7 +25,10 @@ const AppointmentPage = () => {
         console.error('Error fetching doctor details:', error);
       });
 
-    axios.get(`/doctors/${doctorId}/slots`)
+    axios.get(`/doctors/${doctorId}/slots`, { auth: {
+      username: user.email,
+      password: user.password
+    }})
       .then(response => {
         setSlots(response.data);
       })
@@ -43,7 +49,10 @@ const AppointmentPage = () => {
         time: time,
         doctorId: doctorId,
         patientId: user.id // Use the logged-in user's patient ID
-      });
+      }, { auth: {
+        username: user.email,
+        password: user.password
+      }});
       alert(`Appointment booked for ${response.data.date} at ${response.data.time}`);
       navigate('/appointment-booked');
     } catch (error) {

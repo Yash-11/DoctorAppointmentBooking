@@ -32,6 +32,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.security.config.Customizer;
 
 import java.io.IOException;
 
@@ -64,6 +65,7 @@ public class WebSecurityConfig  {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http
+                .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
                 //.requestMatchers("/**").permitAll()
                 .requestMatchers(WHITELIST).permitAll()                

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useUser } from './UserContext';
+import { useUser } from '../context/UserContext';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 
@@ -14,13 +14,16 @@ const Login = () => {
     e.preventDefault();
     const params = new URLSearchParams();
     let hj = username + ":PATIENT";
-    params.append('email', hj);
+    params.append('email', username);
     params.append('password', password);
 
     try {
       const response = await axios.post('http://localhost:8080/login', params);
       console.log(response.data);
+      response.data.password = password;
       setUser(response.data);
+      // const ree = await axios.get('http://localhost:8080/doctors?specialization=ENT&city=delhi');
+      // console.log(ree.data);
       navigate('/form');
     } catch (error) {
       console.error('There was an error!', error);

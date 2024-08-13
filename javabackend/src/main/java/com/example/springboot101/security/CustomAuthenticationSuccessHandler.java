@@ -36,10 +36,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                              .orElse("");
 
         
-        Long userId = customUserDetailsService.fetchUserIdByUsername(userDetails.getUsername(), role);
 
         // Create the UserDTO
-        UserDTO userDTO = new UserDTO(userId, userDetails.getUsername(), userDetails.getUsername(), role);
+        UserDTO userDTO = customUserDetailsService.fetchUserByUsername(userDetails.getUsername(), role);
 
         // Set the response
         response.setStatus(HttpServletResponse.SC_OK);

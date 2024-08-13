@@ -3,19 +3,28 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './DoctorList.css';
+import { useUser } from '../context/UserContext'; 
 
 const DoctorList = () => {
   const [doctors, setDoctors] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useUser();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const specialization = queryParams.get('specialization');
     const city = queryParams.get('city');
 
+    console.log(user.password);
+    let hj = user.email + ":PATIENT";
+    console.log(hj);
+
     // Fetch doctors from the backend API based on specialization and city
-    axios.get(`/doctors?specialization=${specialization}&city=${city}`)
+    axios.get(`/doctors?specialization=${specialization}&city=${city}`, { auth: {
+      username: user.email,
+      password: user.password
+    }})
       .then(response => {
         setDoctors(response.data);
       })
