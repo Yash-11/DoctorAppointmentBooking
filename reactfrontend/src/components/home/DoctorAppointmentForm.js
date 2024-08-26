@@ -5,6 +5,8 @@ import { useUser } from '../context/UserContext';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './DoctorAppointmentForm.css'
 import { Carousel } from 'react-bootstrap';
+import useLogout from '../hooks/useLogout';
+
 
 
 const DoctorAppointmentForm = () => {
@@ -97,16 +99,17 @@ const DoctorAppointmentForm = () => {
     navigate(`/doctors?specialization=${selectedSpecialization}&city=${selectedCity}`);
   };
 
-  const handleLogout = () => {
-    setUser(null);
-    navigate('/login');
-  };
+  // const handleLogout = () => {
+  //   setUser(null);
+  //   navigate('/login');
+  // };
+  const handleLogout = useLogout(setUser);
 
   return (
     <div className="container">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <Link className="navbar-brand" to="/">
-          <img src="./logo.png" alt="MediLink Logo" style={{ height: '50px' }} />
+          <img src={require('../../assets/logo.png')} alt="MediLink Logo" style={{ height: '50px' }} />
         </Link>
         
         <div className="collapse navbar-collapse">

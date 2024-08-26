@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './DoctorList.css';
 import { useUser } from '../context/UserContext'; 
+import useLogout from '../hooks/useLogout';
 
 const DoctorList = () => {
   const [doctors, setDoctors] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -21,10 +22,10 @@ const DoctorList = () => {
     console.log(hj);
 
     // Fetch doctors from the backend API based on specialization and city
-    axios.get(`/doctors?specialization=${specialization}&city=${city}`, { auth: {
-      username: user.email,
-      password: user.password
-    }})
+    axios.get(`/doctors?specialization=${specialization}&city=${city}`, 
+      {headers: {
+        "Authorization": "Bearer "+`${user.jwt}`
+   }})
       .then(response => {
         setDoctors(response.data);
       })
@@ -37,7 +38,33 @@ const DoctorList = () => {
     navigate(`/appointment/${doctorId}`);
   };
 
+  const handleLogout = useLogout(setUser);
+
   return (
+
+    <div className="container">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <Link className="navbar-brand" to="/">
+          <img src={require('../../assets/logo.png')} alt="MediLink Logo" style={{ height: '50px' }} />
+        </Link>
+        
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav ml-auto">
+            {!user ? (
+              <><li className="nav-item">
+                <Link className="nav-link" to="/login">Login</Link>
+              </li><li className="nav-item">
+                  <Link className="nav-link" to="/register_patient">Register</Link>
+                </li></>
+            ) : (
+              <li className="nav-item">
+                <button className="btn btn-link nav-link" onClick={handleLogout}>Logout</button>
+              </li>
+            )}
+          </ul>
+        </div>
+      </nav>
+
     <div className="container mt-5">
       <h1 className="text-center mb-4">Doctors</h1>
       <div className="row">
@@ -58,6 +85,8 @@ const DoctorList = () => {
           </div>
         ))}
       </div>
+    </div>
+
     </div>
   );
 };

@@ -1,10 +1,10 @@
 package com.example.springboot101.services;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,7 @@ import com.example.springboot101.models.Appointment;
 import com.example.springboot101.repositories.AppointmentRepository;
 import com.example.springboot101.repositories.DoctorRepository;
 import com.example.springboot101.repositories.PatientRepository;
+import com.example.springboot101.util.constants.AppointmentState;
 
 @Service
 public class AppointmentService {
@@ -122,4 +123,23 @@ public class AppointmentService {
         savedAppointment.getPatient().getName());
     }
 
+    public AppointmentDTO confirmAppointment(Long appointmentid) {
+        Optional<Appointment> optionalAppointment = appointmentRepository.findById(appointmentid);
+
+        Appointment appointment = optionalAppointment.get();
+        appointment.setAppointmentState(AppointmentState.BOOKED);
+        return new AppointmentDTO(
+        appointment.getId(),
+        appointment.getDate(),
+        appointment.getTime(),
+        appointment.getDoctor().getId(),
+        appointment.getDoctor().getName(),
+        appointment.getPatient().getId(),
+        appointment.getPatient().getName());
+    
+    }
+
+    public void cancelAppointment(Long appointmentid) {
+        appointmentRepository.deleteById(appointmentid);
+    }
 }

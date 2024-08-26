@@ -18,12 +18,27 @@ const Login = () => {
     params.append('password', password);
 
     try {
-      const response = await axios.post('http://localhost:8080/login', params);
+
+    //   const response = await axios.post('http://localhost:8080/ggg', null, {
+    //     headers: {
+    //        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcyNDA2Mjk4MiwiZXhwIjoxNzI0MDk4OTgyfQ.ncoPzAPPhzkMquYNKvyncmefJEZTf6AzwULIeJDZu3k"
+    //     }
+    //  });
+    //   console.log(response.data);
+
+      const patient = {
+        username: username,
+        password: password
+      }
+
+      const response = await axios.post('http://localhost:8080/authenticate', patient);
       console.log(response.data);
-      response.data.password = password;
+
+
+      // const response = await axios.post('http://localhost:8080/login', params);
+      // console.log(response.data);
+      // response.data.password = password;
       setUser(response.data);
-      // const ree = await axios.get('http://localhost:8080/doctors?specialization=ENT&city=delhi');
-      // console.log(ree.data);
       navigate('/form');
     } catch (error) {
       console.error('There was an error!', error);

@@ -4,11 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 //import org.springframework.security.authentication.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +20,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.core.AuthenticationException;
@@ -42,6 +46,17 @@ import java.io.IOException;
 @EnableMethodSecurity
 public class WebSecurityConfig  {
 
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
+
+    @Bean
+    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService) {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return new ProviderManager(daoAuthenticationProvider);
+    }
+
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -50,6 +65,7 @@ public class WebSecurityConfig  {
     private static final String[] WHITELIST = {
         "/",
         "/login",
+        "/authenticate/**",
         "/register_patient",
         "/register_doctor",
         "/db-console/**",
@@ -65,33 +81,35 @@ public class WebSecurityConfig  {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http
-                .httpBasic(Customizer.withDefaults())
-                .authorizeHttpRequests(authorize -> authorize
-                //.requestMatchers("/**").permitAll()
+            .httpBasic(Customizer.withDefaults())
+            .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(WHITELIST).permitAll()                
                 .requestMatchers("/doctors/**").hasRole("PATIENT")
                 .requestMatchers("/book/**").hasRole("PATIENT")
-                .requestMatchers("/appointments/patient/**").hasRole("PATIENT")                                
-                )
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/login")
-                                .loginProcessingUrl("/login")
-                                .usernameParameter("email")
-                                .passwordParameter("password")
-                                .successHandler(authenticationSuccessHandler())
-                                .failureHandler(authenticationFailureHandler())
-                                .permitAll()
-                )
-                .logout(logout ->
-                        logout
-                                .logoutUrl("/logout")
-                                .logoutSuccessUrl("/")
-                )
-                .httpBasic(withDefaults());
+                .requestMatchers("/appointments/patient/**").hasRole("PATIENT")    
+                .requestMatchers("/confirmAppointment/**").hasRole("PATIENT")                                
+            )
+            // .formLogin(formLogin ->
+            //         formLogin
+            //                 .loginPage("/login")
+            //                 .loginProcessingUrl("/login")
+            //                 .usernameParameter("email")
+            //                 .passwordParameter("password")
+            //                 .successHandler(authenticationSuccessHandler())
+            //                 .failureHandler(authenticationFailureHandler())
+            //                 .permitAll()
+            // )
+            // .logout(logout ->
+            //         logout
+            //                 .logoutUrl("/logout")
+            //                 .logoutSuccessUrl("/")
+            // )
+            .httpBasic(withDefaults())
+            .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.csrf(csrf -> csrf.disable());
-        http.headers(headers -> headers.frameOptions().disable());
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        // http.headers(headers -> headers.frameOptions().disable());
 
         return http.build();
     }

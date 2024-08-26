@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.springboot101.dto.AppointmentDTO;
@@ -52,5 +53,17 @@ public class AppointmentController {
         // }
         List<AppointmentDTO> appointments = appointmentService.getAppointmentsByUserId(userId);
         return ResponseEntity.ok(appointments);
+    }
+
+    @GetMapping("/confirmAppointment/{appointmentId}")
+    public ResponseEntity<AppointmentDTO> confirmAppointment(@PathVariable Long appointmentId) {
+        AppointmentDTO bookedAppointment = appointmentService.confirmAppointment(appointmentId);
+        return ResponseEntity.ok(bookedAppointment);
+    }
+
+    @GetMapping("/cancelAppointment/{appointmentId}")
+    public ResponseEntity<String> cancelAppointment(@PathVariable Long appointmentId) {
+        appointmentService.cancelAppointment(appointmentId);
+        return ResponseEntity.ok("cancelled");
     }
 }

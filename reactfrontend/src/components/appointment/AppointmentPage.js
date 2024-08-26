@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useUser } from '../context/UserContext'; 
 import { useNavigate } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './AppointmentPage.css';
+import useLogout from '../hooks/useLogout';
 
 const AppointmentPage = () => {
   const { doctorId } = useParams();
   const [doctor, setDoctor] = useState(null);
   const [slots, setSlots] = useState([]);
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
 
+  const handleLogout = useLogout(setUser);
+
   useEffect(() => {
-    axios.get(`/doctors/${doctorId}`, { auth: {
-      username: user.email,
-      password: user.password
-    }})
+    axios.get(`/doctors/${doctorId}`, 
+      {headers: {
+        "Authorization": "Bearer "+`${user.jwt}`
+   }})
       .then(response => {
         setDoctor(response.data);
       })
@@ -25,10 +28,10 @@ const AppointmentPage = () => {
         console.error('Error fetching doctor details:', error);
       });
 
-    axios.get(`/doctors/${doctorId}/slots`, { auth: {
-      username: user.email,
-      password: user.password
-    }})
+    axios.get(`/doctors/${doctorId}/slots`, 
+      {headers: {
+        "Authorization": "Bearer "+`${user.jwt}`
+   }})
       .then(response => {
         setSlots(response.data);
       })
@@ -44,21 +47,36 @@ const AppointmentPage = () => {
     }
 
     try {
-      const response = await axios.post('/book', {
-        date: date,
-        time: time,
-        doctorId: doctorId,
-        patientId: user.id // Use the logged-in user's patient ID
-      }, { auth: {
-        username: user.email,
-        password: user.password
-      }});
+      const res = await axios.post('/book', {
+          date: date,
+          time: time,
+          doctorId: doctorId,
+          patientId: user.id // Use the logged-in user's patient ID
+        }, 
+        {headers: {
+            "Authorization": "Bearer "+`${user.jwt}`
+        }}
+      );      
+
+      const response = await axios.get(`/confirmAppointment/${res.data.id}`, 
+        {headers: {
+            "Authorization": "Bearer "+`${user.jwt}`
+        }}
+      );
+
       alert(`Appointment booked for ${response.data.date} at ${response.data.time}`);
       navigate('/appointment-booked');
     } catch (error) {
       console.error('Error booking appointment:', error);
       alert('Failed to book appointment');
     }
+
+    // try {
+      
+    // }catch (error) {
+    //   console.error('Error booking appointment:', error);
+    //   alert('Failed to book appointment');
+    // }
   };
 
   if (!doctor) {
@@ -66,6 +84,29 @@ const AppointmentPage = () => {
   }
 
   return (
+    <div className="container">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <Link className="navbar-brand" to="/">
+          <img src={require('../../assets/logo.png')} alt="MediLink Logo" style={{ height: '50px' }} />
+        </Link>
+        
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav ml-auto">
+            {!user ? (
+              <><li className="nav-item">
+                <Link className="nav-link" to="/login">Login</Link>
+              </li><li className="nav-item">
+                  <Link className="nav-link" to="/register_patient">Register</Link>
+                </li></>
+            ) : (
+              <li className="nav-item">
+                <button className="btn btn-link nav-link" onClick={handleLogout}>Logout</button>
+              </li>
+            )}
+          </ul>
+        </div>
+      </nav>
+
     <div className="container mt-5">
       <div className="card mb-4">
         <div className="card-body">
@@ -92,6 +133,8 @@ const AppointmentPage = () => {
           </div>
         </div>
       ))}
+    </div>
+
     </div>
   );
 };
