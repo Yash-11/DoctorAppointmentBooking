@@ -14,7 +14,6 @@ import com.example.springboot101.services.CityService;
 import com.example.springboot101.services.SpecializationService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 public class MiscController {
 
     @Autowired
@@ -22,6 +21,11 @@ public class MiscController {
 
     @Autowired
     private CityService cityService;
+
+    @GetMapping("/")
+	public ResponseEntity<?> gethome() {
+		return ResponseEntity.ok("Hello World!");
+	}
     
     @GetMapping("/all_specializations")
     public ResponseEntity<List<SpecializationDTO>> getSpecializations() {

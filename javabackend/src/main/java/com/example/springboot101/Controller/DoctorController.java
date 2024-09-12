@@ -15,7 +15,6 @@ import com.example.springboot101.handler.ResourceNotFoundException;
 import com.example.springboot101.services.DoctorService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 public class DoctorController {
 
     @Autowired

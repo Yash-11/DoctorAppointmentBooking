@@ -20,7 +20,6 @@ import com.example.springboot101.services.AppointmentService;
 import com.example.springboot101.services.DoctorService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 public class AppointmentController {
 
     @Autowired
