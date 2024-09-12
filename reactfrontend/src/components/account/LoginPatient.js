@@ -31,7 +31,7 @@ const Login = () => {
         password: password
       }
 
-      const response = await axios.post('http://localhost:8080/authenticate', patient);
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/authenticate`, patient);
       console.log(response.data);
 
 

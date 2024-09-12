@@ -19,7 +19,7 @@ const DoctorLogin = () => {
     params.append('password', password);
 
     try {
-      const response = await axios.post('http://localhost:8080/login', params);
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/login`, params);
       console.log(response.data);
       setUser(response.data);
       navigate('/doctor-dashboard');

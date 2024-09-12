@@ -39,7 +39,7 @@ const DoctorAppointmentForm = () => {
     
     if (true) {
 
-      axios.get('/all_specializations')
+      axios.get(`${process.env.REACT_APP_API_BASE_URL}/all_specializations`)
         .then(response => {
           setSpecializations(response.data);
         })
@@ -48,7 +48,7 @@ const DoctorAppointmentForm = () => {
         });
   
   
-      axios.get('/cities')
+      axios.get(`${process.env.REACT_APP_API_BASE_URL}/cities`)
         .then(response => {
           setCities(response.data);
         })
@@ -60,7 +60,7 @@ const DoctorAppointmentForm = () => {
       console.log(user.password);
       let hj = user.email + ":PATIENT";
       
-      axios.get('/all_specializations', { auth: {
+      axios.get(`${process.env.REACT_APP_API_BASE_URL}/all_specializations`, { auth: {
 
         username: hj,
         password: user.password
@@ -73,7 +73,7 @@ const DoctorAppointmentForm = () => {
         });
   
   
-      axios.get('/cities', { auth: {
+      axios.get(`${process.env.REACT_APP_API_BASE_URL}/cities`, { auth: {
         username: user.email+":PATIENT",
         password: user.password
       }})

@@ -31,5 +31,9 @@ public class CityService {
             .map(city -> new CityDTO(city.getId(), city.getName()))
             .collect(Collectors.toList());
     }
+
+    public List<City> findByName(String name) {
+        return cityRepository.findByName(name);
+    }
     
 }

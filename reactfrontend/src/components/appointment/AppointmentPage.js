@@ -17,7 +17,7 @@ const AppointmentPage = () => {
   const handleLogout = useLogout(setUser);
 
   useEffect(() => {
-    axios.get(`/doctors/${doctorId}`, 
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors/${doctorId}`, 
       {headers: {
         "Authorization": "Bearer "+`${user.jwt}`
    }})
@@ -28,7 +28,7 @@ const AppointmentPage = () => {
         console.error('Error fetching doctor details:', error);
       });
 
-    axios.get(`/doctors/${doctorId}/slots`, 
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors/${doctorId}/slots`, 
       {headers: {
         "Authorization": "Bearer "+`${user.jwt}`
    }})
@@ -47,7 +47,7 @@ const AppointmentPage = () => {
     }
 
     try {
-      const res = await axios.post('/book', {
+      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/book`, {
           date: date,
           time: time,
           doctorId: doctorId,
@@ -58,7 +58,7 @@ const AppointmentPage = () => {
         }}
       );      
 
-      const response = await axios.get(`/confirmAppointment/${res.data.id}`, 
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/confirmAppointment/${res.data.id}`, 
         {headers: {
             "Authorization": "Bearer "+`${user.jwt}`
         }}

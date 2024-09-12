@@ -19,7 +19,7 @@ const DoctorRegister = () => {
     };
 
     try {
-      const response = await axios.post('/register_patient', patientData);
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/register_patient`, patientData);
       alert('Registration successful!');
       // Optionally, navigate to a different page or reset the form
     } catch (error) {

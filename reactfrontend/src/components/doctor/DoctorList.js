@@ -22,7 +22,7 @@ const DoctorList = () => {
     console.log(hj);
 
     // Fetch doctors from the backend API based on specialization and city
-    axios.get(`/doctors?specialization=${specialization}&city=${city}`, 
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors?specialization=${specialization}&city=${city}`, 
       {headers: {
         "Authorization": "Bearer "+`${user.jwt}`
    }})

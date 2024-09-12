@@ -18,7 +18,6 @@ public class SpecializationService {
 
     public Specialization save(Specialization specialization){
         return specializationRepository.save(specialization);
-
     }
 
     public Optional<Specialization> findById (Long id) {
@@ -30,6 +29,10 @@ public class SpecializationService {
         return specializations.stream()
             .map(specialization -> new SpecializationDTO(specialization.getId(), specialization.getName()))
             .collect(Collectors.toList());
-
     }
+
+    public List<Specialization> findByName(String name) {
+        return specializationRepository.findByName(name);
+    }
+
 }

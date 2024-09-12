@@ -47,7 +47,7 @@ const Payment = () => {
 
   const createPaymentIntent = async () => {
     try {
-      const response = await axios.post('/api/payment/create-payment-intent', {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/payment/create-payment-intent`, {
         amount: 1000, // amount in cents
       });
       //setClientSecret(response.data.clientSecret);
