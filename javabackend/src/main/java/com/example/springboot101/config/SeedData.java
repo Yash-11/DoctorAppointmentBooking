@@ -115,20 +115,20 @@ public class SeedData implements CommandLineRunner {
         Specialization entSpecialization = getOrCreateSpecialization("ENT");
         Specialization dentistSpecialization = getOrCreateSpecialization("Dentist");
 
-        City delhiCity = getOrCreateCity("delhi");
-        City mumbaiCity = getOrCreateCity("mumbai");
+        City delhiCity = getOrCreateCity("Delhi");
+        City mumbaiCity = getOrCreateCity("Mumbai");
 
         // Create Doctors
-        createDoctorIfNotExists("abc@gmail.com", "yash", entSpecialization, delhiCity);
-        createDoctorIfNotExists("naman@gmail.com", "naman", entSpecialization, delhiCity);
-        createDoctorIfNotExists("shubh@gmail.com", "shubh", dentistSpecialization, mumbaiCity);
-        createDoctorIfNotExists("ajit@gmail.com", "ajit", dentistSpecialization, mumbaiCity);
+        createDoctorIfNotExists("abc@gmail.com", "Yash", entSpecialization, delhiCity);
+        createDoctorIfNotExists("naman@gmail.com", "Naman", entSpecialization, delhiCity);
+        createDoctorIfNotExists("shubh@gmail.com", "Shubh", dentistSpecialization, mumbaiCity);
+        createDoctorIfNotExists("ajit@gmail.com", "Ajit", dentistSpecialization, mumbaiCity);
 
         // Create Patients
-        createPatientIfNotExists("vaibhav@gmail.com", "vaibhav");
-        createPatientIfNotExists("prat@gmail.com", "prat");
-        createPatientIfNotExists("ktk@gmail.com", "ktk");
-        createPatientIfNotExists("tanishk@gmail.com", "tanishk");
+        createPatientIfNotExists("vaibhav@gmail.com", "Vaibhav");
+        createPatientIfNotExists("prat@gmail.com", "Pratyush");
+        createPatientIfNotExists("ktk@gmail.com", "Kartikey");
+        createPatientIfNotExists("tanishk@gmail.com", "Tanishk");
 
         // Specialization specialization01;
         // List<Specialization> specializationList =

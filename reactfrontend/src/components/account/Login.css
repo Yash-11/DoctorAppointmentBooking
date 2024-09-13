@@ -1,14 +1,30 @@
 /* src/Login.css */
-.login-container {
+.login-containe {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background-color: #f0f2f5;
+    /* margin: auto; */
+    /* height: 100vh; */
+    /* background-color: #f0f2f5; */
     font-family: Arial, sans-serif;
+    padding-top: 3%;
+  }
+
+  .custom-hr {
+    border: 0;
+    height: 1px;
+    background: #adacac; /* Color of the line */
+    width: 80%;
+    /* margin: 50px 0; Space above and below the line */
+    margin: auto;
   }
   
+  .h2heading {
+    color: rgb(78, 138, 78);
+    text-align: center;
+  }
+
   .login-box {
     background: #fff;
     padding: 20px 40px;

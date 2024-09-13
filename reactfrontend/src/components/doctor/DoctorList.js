@@ -3,8 +3,9 @@ import axios from 'axios';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './DoctorList.css';
-import { useUser } from '../context/UserContext'; 
+import { useUser } from '../context/UserContext';
 import useLogout from '../hooks/useLogout';
+import Navbar from '../navbar/Navbar';
 
 const DoctorList = () => {
   const [doctors, setDoctors] = useState([]);
@@ -22,10 +23,12 @@ const DoctorList = () => {
     console.log(hj);
 
     // Fetch doctors from the backend API based on specialization and city
-    axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors?specialization=${specialization}&city=${city}`, 
-      {headers: {
-        "Authorization": "Bearer "+`${user.jwt}`
-   }})
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors?specialization=${specialization}&city=${city}`,
+      {
+        headers: {
+          "Authorization": "Bearer " + `${user.jwt}`
+        }
+      })
       .then(response => {
         setDoctors(response.data);
       })
@@ -42,50 +45,44 @@ const DoctorList = () => {
 
   return (
 
-    <div className="container">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link className="navbar-brand" to="/">
-          <img src={require('../../assets/logo.png')} alt="MediLink Logo" style={{ height: '50px' }} />
-        </Link>
-        
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav ml-auto">
-            {!user ? (
-              <><li className="nav-item">
-                <Link className="nav-link" to="/login">Login</Link>
-              </li><li className="nav-item">
-                  <Link className="nav-link" to="/register_patient">Register</Link>
-                </li></>
-            ) : (
-              <li className="nav-item">
-                <button className="btn btn-link nav-link" onClick={handleLogout}>Logout</button>
-              </li>
-            )}
-          </ul>
-        </div>
-      </nav>
+    <div>
+      <Navbar user={user} handleLogout={handleLogout} />
 
-    <div className="container mt-5">
-      <h1 className="text-center mb-4">Doctors</h1>
-      <div className="row">
-        {doctors.map(doctor => (
-          <div key={doctor.id} className="col-md-4 mb-4">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{doctor.name}</h5>
-                <p className="card-text">Specialization: {doctor.specializationName}</p>
-                <p className="card-text">City: {doctor.cityName}</p>
-                <button 
-                  className="btn btn-primary" 
-                  onClick={() => handleDoctorClick(doctor.id)}>
-                  Book Appointment
-                </button>
+      <div className="container mt-5">
+        <h1 className="text-center mb-4 h2heading">Doctors</h1>
+        <hr className="custom-hr mt-3 mb-3"></hr>
+
+
+        <div className="row ">
+          {doctors.map(doctor => (
+            <div key={doctor.id} className="col-md-4 mb-4 mt-4">
+              <div className="card">
+                <div className="card-content">
+
+                  <div className="card-image">
+                    <img className='img-fluid rounded-start' src={require('../../assets/profile.png')} alt="Doctor" />
+                  </div>
+                  <div className="card-body">
+                    <h5 className="card-title">{doctor.name}</h5>
+                    <p className="card-text">Specialization: {doctor.specializationName}</p>
+                    <p className="card-text">City: {doctor.cityName}</p>
+
+                  </div>
+                  {/* <div className="col-md-8">
+                  </div> */}
+                  
+
+                </div>
+                <button
+                    className="btn btn-primary"
+                    onClick={() => handleDoctorClick(doctor.id)}>
+                    Book Appointment
+                  </button>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
 
     </div>
   );

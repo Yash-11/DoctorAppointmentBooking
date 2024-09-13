@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './AppointmentBooked.css';
 import useLogout from '../hooks/useLogout';
+import Navbar from '../navbar/Navbar';
 
 
 const AppointmentBooked = () => {
@@ -33,27 +34,7 @@ const AppointmentBooked = () => {
 
   return (
     <div className="container">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link className="navbar-brand" to="/">
-          <img src={require('../../assets/logo.png')} alt="MediLink Logo" style={{ height: '50px' }} />
-        </Link>
-        
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav ml-auto">
-            {!user ? (
-              <><li className="nav-item">
-                <Link className="nav-link" to="/login">Login</Link>
-              </li><li className="nav-item">
-                  <Link className="nav-link" to="/register_patient">Register</Link>
-                </li></>
-            ) : (
-              <li className="nav-item">
-                <button className="btn btn-link nav-link" onClick={handleLogout}>Logout</button>
-              </li>
-            )}
-          </ul>
-        </div>
-      </nav>
+      <Navbar user={user} handleLogout={handleLogout} />
     <div className="container mt-5">
       <h2 className="text-center mb-4">Your Appointments</h2>
       {appointments.length > 0 ? (

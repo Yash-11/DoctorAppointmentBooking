@@ -6,6 +6,7 @@ import { useUser } from '../context/UserContext';
 import './DoctorAppointmentForm.css'
 import { Carousel } from 'react-bootstrap';
 import useLogout from '../hooks/useLogout';
+import Navbar from '../navbar/Navbar';
 
 
 
@@ -106,33 +107,14 @@ const DoctorAppointmentForm = () => {
   const handleLogout = useLogout(setUser);
 
   return (
-    <div className="container">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link className="navbar-brand" to="/">
-          <img src={require('../../assets/logo.png')} alt="MediLink Logo" style={{ height: '50px' }} />
-        </Link>
-        
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav ml-auto">
-            {!user ? (
-              <><li className="nav-item">
-                <Link className="nav-link" to="/login">Login</Link>
-              </li><li className="nav-item">
-                  <Link className="nav-link" to="/register_patient">Register</Link>
-                </li></>
-            ) : (
-              <li className="nav-item">
-                <button className="btn btn-link nav-link" onClick={handleLogout}>Logout</button>
-              </li>
-            )}
-          </ul>
-        </div>
-      </nav>
+    <div>
+
+      <Navbar user={user} handleLogout={handleLogout} />
 
       {/* <img src="https://via.placeholder.com/300" alt="Placeholder Image"> */}
             {/* <img src="./homeimg.jpg" alt="MediLink Logo" style={{ height: '50px' }} /> */}
 
-      <div className='coainnt mt-4'>
+      <div className="coainnt mt-4" >
 
       <div className="mt-4 ggg rrr">
         <h2 className='h2heading'>Find a Doctor</h2>
@@ -182,27 +164,30 @@ const DoctorAppointmentForm = () => {
       </div>
 
 
-      <hr className="custom-hr"></hr>
+      <hr className="custom-hr mt-4"></hr>
 
-      <div className="mt-4">
-      <h2 className='h2heading'>What Our Patients Say</h2>
-      <Carousel indicators={true} controls={true}>
-        {reviews.map((review, index) => (
-          <Carousel.Item key={index}>
-            <div className="card testimonial-card">
-              <div className="card-body testimonial">
-                <blockquote className="blockquote mb-0">
-                  <p>{review.content}</p>
-                  <footer className="blockquote-footer">{review.author}</footer>
-                </blockquote>
-              </div>
-            </div>
-          </Carousel.Item>
-        ))}
-      </Carousel>
+      <div className="mt-4 Carousel-container">
+        <div>
+          <h2 className='h2heading'>What Our Patients Say</h2>
+          
+          <Carousel indicators={true} controls={true}>
+            {reviews.map((review, index) => (
+              <Carousel.Item key={index}>
+                <div className="card testimonial-card">
+                  <div className="card-body testimonial">
+                    <blockquote className="blockquote mb-0">
+                      <p>{review.content}</p>
+                      <footer className="blockquote-footer">{review.author}</footer>
+                    </blockquote>
+                  </div>
+                </div>
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        </div>
       </div>
 
-    <hr className="custom-hr"></hr>
+    {/* <hr className="custom-hr mt-4"></hr> */}
 
 
       <footer className="bg-light text-center text-lg-start mt-4">
