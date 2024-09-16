@@ -35,11 +35,11 @@ const PatientRegister = () => {
     }
   };
 
-  const handleLogout = useLogout(setUser);
+  const handleLogout = useLogout();
 
   return (
     <div>
-      <Navbar user={user} handleLogout={handleLogout} />
+      <Navbar handleLogout={handleLogout} />
 
       <h2 className='h2heading mt-4'>Register</h2>
       <hr className="custom-hr mt-4"></hr>

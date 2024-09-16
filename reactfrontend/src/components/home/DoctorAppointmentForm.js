@@ -37,54 +37,23 @@ const DoctorAppointmentForm = () => {
   }, [reviews.length]);
 
   useEffect(() => {
-    
-    if (true) {
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/all_specializations`)
+      .then(response => {
+        setSpecializations(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching specializations:', error);
+      });
 
-      axios.get(`${process.env.REACT_APP_API_BASE_URL}/all_specializations`)
-        .then(response => {
-          setSpecializations(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching specializations:', error);
-        });
-  
-  
-      axios.get(`${process.env.REACT_APP_API_BASE_URL}/cities`)
-        .then(response => {
-          setCities(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching cities:', error);
-        });
-    } else {
-      console.log(user.email);
-      console.log(user.password);
-      let hj = user.email + ":PATIENT";
-      
-      axios.get(`${process.env.REACT_APP_API_BASE_URL}/all_specializations`, { auth: {
 
-        username: hj,
-        password: user.password
-      }})
-        .then(response => {
-          setSpecializations(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching specializations:', error);
-        });
-  
-  
-      axios.get(`${process.env.REACT_APP_API_BASE_URL}/cities`, { auth: {
-        username: user.email+":PATIENT",
-        password: user.password
-      }})
-        .then(response => {
-          setCities(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching cities:', error);
-        });
-    }
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/cities`)
+      .then(response => {
+        setCities(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching cities:', error);
+      });
+
   }, []);
 
   const handleSpecializationChange = (event) => {
@@ -104,12 +73,12 @@ const DoctorAppointmentForm = () => {
   //   setUser(null);
   //   navigate('/login');
   // };
-  const handleLogout = useLogout(setUser);
+  const handleLogout = useLogout();
 
   return (
     <div>
 
-      <Navbar user={user} handleLogout={handleLogout} />
+      <Navbar handleLogout={handleLogout} />
 
       {/* <img src="https://via.placeholder.com/300" alt="Placeholder Image"> */}
             {/* <img src="./homeimg.jpg" alt="MediLink Logo" style={{ height: '50px' }} /> */}
@@ -168,7 +137,7 @@ const DoctorAppointmentForm = () => {
 
       <div className="mt-4 Carousel-container">
         <div>
-          <h2 className='h2heading'>What Our Patients Say</h2>
+          <h2 className='h2heading mb-3'>What Our Patients Say</h2>
           
           <Carousel indicators={true} controls={true}>
             {reviews.map((review, index) => (
@@ -190,7 +159,7 @@ const DoctorAppointmentForm = () => {
     {/* <hr className="custom-hr mt-4"></hr> */}
 
 
-      <footer className="bg-light text-center text-lg-start mt-4">
+      <footer className="bg-light text-center text-lg-start mt-5">
       <div className="container p-4">
         <div className="row">
           <div className="col-lg-4 col-md-6 mb-4 mb-md-0">

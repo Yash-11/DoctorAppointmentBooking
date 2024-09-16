@@ -1,16 +1,15 @@
 import { Navigate } from 'react-router-dom';
 import { useContext } from 'react';
-
+import axios from 'axios';
 import { useUser } from '../context/UserContext'; 
 
 const AuthRoute = ({role,  children }) => {
-//   const { user } = useContext(UserContext); // Assuming you have a user context to manage authentication
-  const { user } = useUser();
-  if (!user) {
+
+  if (localStorage.getItem('token') === null) {
     return <Navigate to="/login" />;
   }
 
-  if (user.role !== role) {
+  if (localStorage.getItem('role')!=role) {
     return <Navigate to="/login" />;
   }
 

@@ -41,18 +41,21 @@ const Login = () => {
       // const response = await axios.post('http://localhost:8080/login', params);
       // console.log(response.data);
       // response.data.password = password;
-      setUser(response.data);
+      // setUser(response.data);
+
+      localStorage.setItem('token', response.data.jwt);
+      localStorage.setItem('role', response.data.role);
       navigate('/form');
     } catch (error) {
       console.error('There was an error!', error);
     }
   };
 
-  const handleLogout = useLogout(setUser);
+  const handleLogout = useLogout();
 
   return (
     <div>
-      <Navbar user={user} handleLogout={handleLogout} />
+      <Navbar handleLogout={handleLogout} />
 
       <h2 className='h2heading mt-4'>Login</h2>
       <hr className="custom-hr mt-4"></hr>

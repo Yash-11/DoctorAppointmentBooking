@@ -105,12 +105,12 @@ public class AppointmentService {
         return slots;
     }
 
-    public AppointmentDTO bookAppointment(AppointmentDTO appointmentDTO) {
+    public AppointmentDTO bookAppointment(AppointmentDTO appointmentDTO, String username) {
         Appointment appointment = new Appointment();
         appointment.setDate(appointmentDTO.getDate());
         appointment.setTime(appointmentDTO.getTime());
         appointment.setDoctor(doctorRepository.findById(appointmentDTO.getDoctorId()).orElseThrow());
-        appointment.setPatient(patientRepository.findById(appointmentDTO.getPatientId()).orElseThrow());
+        appointment.setPatient(patientRepository.findOneByEmailIgnoreCase(username).get());
         Appointment savedAppointment = appointmentRepository.save(appointment);
 
         return new AppointmentDTO(

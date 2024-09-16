@@ -1,12 +1,11 @@
-// src/utils/authUtils.js
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../context/UserContext';
 
-const useLogout = (setUser) => {
+const useLogout = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        setUser(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
         navigate('/login');
     };
 
@@ -14,13 +13,3 @@ const useLogout = (setUser) => {
 };
 
 export default useLogout;
-
-// export const handleLogout = () => {
-//     const { user, setUser } = useUser();
-//     const navigate = useNavigate();
-
-//     return () => {
-//         setUser(null);
-//         navigate('/login');
-//     };
-// };

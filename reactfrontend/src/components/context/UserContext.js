@@ -12,7 +12,6 @@ export const UserProvider = ({ children }) => {
     if (user) {
 
       console.log(user);
-      console.log(user.role);
     }
   },[user]);
 

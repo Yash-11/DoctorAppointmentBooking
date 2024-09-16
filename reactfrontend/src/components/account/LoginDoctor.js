@@ -22,18 +22,20 @@ const DoctorLogin = () => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/login`, params);
       console.log(response.data);
-      setUser(response.data);
+      // setUser(response.data);
+      localStorage.setItem('token', response.data.jwt);
+      localStorage.setItem('role', response.data.role);
       navigate('/doctor-dashboard');
     } catch (error) {
       console.error('There was an error!', error);
     }
   };
 
-  const handleLogout = useLogout(setUser);
+  const handleLogout = useLogout();
 
   return (
     <div>
-      <Navbar user={user} handleLogout={handleLogout} />
+      <Navbar handleLogout={handleLogout} />
       <div className="login-container">
         <div className="login-box">
           <h2>Doctor Login</h2>

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = ({ user, handleLogout }) => {
+const Navbar = ({ handleLogout }) => {
+  var user;
+  if (localStorage.getItem('token')) user = 1;
+  else user = null;
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light container-fluid">
       <Link className="navbar-brand" to="/">

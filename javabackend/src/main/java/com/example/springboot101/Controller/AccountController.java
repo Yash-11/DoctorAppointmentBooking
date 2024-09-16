@@ -113,4 +113,9 @@ public class AccountController {
         patientService.save(patient);
         return ResponseEntity.ok("redirect:/");
     }
+
+    @GetMapping("/isAuthenticated")
+    public ResponseEntity<String> isAuthenticated() {
+        return ResponseEntity.ok("isAuthenticated");
+    }
 }

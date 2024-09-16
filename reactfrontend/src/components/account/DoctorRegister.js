@@ -34,11 +34,11 @@ const DoctorRegister = () => {
     }
   };
 
-  const handleLogout = useLogout(setUser);
+  const handleLogout = useLogout();
 
   return (
     <div>
-      <Navbar user={user} handleLogout={handleLogout} />
+      <Navbar handleLogout={handleLogout} />
       <div className="register-container">
         <div className="register-box">
           <h2>Doctor Registration</h2>

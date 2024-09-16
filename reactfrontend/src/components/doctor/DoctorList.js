@@ -18,21 +18,18 @@ const DoctorList = () => {
     const specialization = queryParams.get('specialization');
     const city = queryParams.get('city');
 
-    console.log(user.password);
-    let hj = user.email + ":PATIENT";
-    console.log(hj);
-
     // Fetch doctors from the backend API based on specialization and city
     axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors?specialization=${specialization}&city=${city}`,
       {
         headers: {
-          "Authorization": "Bearer " + `${user.jwt}`
+          "Authorization": 'Bearer ' + localStorage.getItem('token')
         }
       })
       .then(response => {
         setDoctors(response.data);
       })
       .catch(error => {
+        navigate('/login');
         console.error('Error fetching doctors:', error);
       });
   }, [location]);
@@ -41,12 +38,12 @@ const DoctorList = () => {
     navigate(`/appointment/${doctorId}`);
   };
 
-  const handleLogout = useLogout(setUser);
+  const handleLogout = useLogout();
 
   return (
 
     <div>
-      <Navbar user={user} handleLogout={handleLogout} />
+      <Navbar handleLogout={handleLogout} />
 
       <div className="container mt-5">
         <h1 className="text-center mb-4 h2heading">Doctors</h1>

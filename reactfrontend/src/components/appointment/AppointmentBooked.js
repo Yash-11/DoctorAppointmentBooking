@@ -10,17 +10,15 @@ import Navbar from '../navbar/Navbar';
 
 const AppointmentBooked = () => {
   const [appointments, setAppointments] = useState([]);
-  const { user, setUser } = useUser();
-  const patientId = user.id; // Ensure this is correctly fetching the patient ID
 
-  const handleLogout = useLogout(setUser);
+  const handleLogout = useLogout();
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/appointments/patient/${patientId}`, 
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/appointments/patient`, 
           {headers: {
-            "Authorization": "Bearer "+`${user.jwt}`
+            "Authorization": 'Bearer ' + localStorage.getItem('token')
        }});
         console.log(response.data);
         setAppointments(response.data);
@@ -30,13 +28,13 @@ const AppointmentBooked = () => {
     };
 
     fetchAppointments();
-  }, [patientId]);
+  }, []);
 
   return (
-    <div className="container">
-      <Navbar user={user} handleLogout={handleLogout} />
+    <div>
+      <Navbar handleLogout={handleLogout} />
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Your Appointments</h2>
+      <h2 className="text-center mb-4 h2heading">Your Appointments</h2>
       {appointments.length > 0 ? (
         <div className="list-group">
           {appointments.map(appointment => (
