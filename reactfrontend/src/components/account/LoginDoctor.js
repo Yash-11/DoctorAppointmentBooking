@@ -14,18 +14,19 @@ const DoctorLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const params = new URLSearchParams();
-    let hj = username + ":DOCTOR"
-    params.append('email', hj);
-    params.append('password', password);
+
+    const params = {
+      username: username,
+      password: password
+    }
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/login`, params);
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/authenticate`, params);
       console.log(response.data);
       // setUser(response.data);
       localStorage.setItem('token', response.data.jwt);
       localStorage.setItem('role', response.data.role);
-      navigate('/doctor-dashboard');
+      navigate('/form');
     } catch (error) {
       console.error('There was an error!', error);
     }
