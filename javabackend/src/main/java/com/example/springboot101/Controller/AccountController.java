@@ -28,11 +28,15 @@ import com.example.springboot101.services.CustomUserDetailsService;
 import com.example.springboot101.services.DoctorService;
 import com.example.springboot101.services.PatientService;
 import com.example.springboot101.util.constants.Roles;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 public class AccountController {
 
     @Autowired
@@ -52,21 +56,16 @@ public class AccountController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
-
-        // 
-        // AuthenticationRequest authenticationRequest = new AuthenticationRequest();
-        // authenticationRequest.setUsername("user1");
-        // authenticationRequest.setPassword("pass");
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
         } catch (BadCredentialsException e) {
+            log.error("Incorrect username or password");
             throw new Exception("Incorrect username or password", e);
         }
 
-        final UserDetails userDetails = customUserDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
+        final UserDetails userDetails = customUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
         final String jwt = jwtUtil.generateToken(userDetails);
 
@@ -82,36 +81,16 @@ public class AccountController {
         return ResponseEntity.ok(userDTO);
     }
 
-    @GetMapping("/register_doctor")
+    @PostMapping("/register_doctor")
     public ResponseEntity<String> registerDoctor(@RequestBody DoctorDTO doctorDTO) {
-
-        Specialization specialization = new Specialization();
-        specialization.setName(doctorDTO.getSpecializationName());
-
-        City city = new City();
-        city.setName(doctorDTO.getCityName());
-
-        Doctor doctor = new Doctor();
-        doctor.setEmail(doctorDTO.getEmail());
-        doctor.setName(doctorDTO.getName());
-        doctor.setPassword(doctorDTO.getPassword());
-        doctor.setRole(Roles.DOCTOR.getRole());
-        doctor.setSpecialization(specialization);
-        doctor.setCity(city);
-        doctorService.save(doctor);
-        return ResponseEntity.ok("register_patient");
+        doctorService.registerDoctor(doctorDTO);
+        return ResponseEntity.ok("Doctor registered");
     }
 
     @PostMapping("/register_patient")
     public ResponseEntity<String> registerPatientPost(@RequestBody PatientDTO patientDTO) {
-        Patient patient = new Patient();
-        patient.setAge(patientDTO.getAge());
-        patient.setEmail(patientDTO.getEmail());
-        patient.setName(patientDTO.getName());
-        patient.setRole(Roles.PATIENT.getRole());
-        patient.setPassword(patientDTO.getPassword());
-        patientService.save(patient);
-        return ResponseEntity.ok("redirect:/");
+        patientService.registerPatient(patientDTO);
+        return ResponseEntity.ok("Patient registered");
     }
 
     @GetMapping("/isAuthenticated")

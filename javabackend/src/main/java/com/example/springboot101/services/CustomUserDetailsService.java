@@ -15,12 +15,15 @@ import com.example.springboot101.models.Patient;
 import com.example.springboot101.repositories.DoctorRepository;
 import com.example.springboot101.repositories.PatientRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
@@ -51,6 +54,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             Doctor doctor = optionaldoctor.get();
             return new User( doctor.getEmail(), doctor.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("ROLE_DOCTOR")));
         } else {
+            log.error("User not found");
             throw new UsernameNotFoundException("User not found");
         }        
     }

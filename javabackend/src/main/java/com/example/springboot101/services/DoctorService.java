@@ -11,8 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot101.models.Doctor;
+import com.example.springboot101.models.Specialization;
 import com.example.springboot101.dto.DoctorDTO;
 import com.example.springboot101.models.Authority;
+import com.example.springboot101.models.City;
 import com.example.springboot101.repositories.DoctorRepository;
 
 import java.util.ArrayList;
@@ -24,36 +26,43 @@ import javax.print.Doc;
 
 import com.example.springboot101.util.constants.Roles;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class DoctorService {
     
     @Autowired
     private DoctorRepository doctorRepository;
 
     @Autowired
+    private CityService cityService;
+
+    @Autowired
+    private SpecializationService specializationService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public Doctor save(Doctor account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
-        // if (account.getRole()==null)
-        //     account.setRole(Roles.USER.getRole());
+        log.info("Doctor : "+account.getName()+" added");
         return doctorRepository.save(account);
     }
 
-    // @Override
-    // public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    //     Optional<Doctor> optionalAccount = accountRepository.findOneByEmailIgnoreCase(email);
-    //     if (!optionalAccount.isPresent()) {
-    //         throw new UsernameNotFoundException("Account not found");
+    public Doctor registerDoctor(DoctorDTO doctorDTO) {
+        Specialization specialization = specializationService.addOrGet(doctorDTO.getSpecializationName());
+        City city = cityService.addOrGet(doctorDTO.getCityName());
 
-    //     }
-
-    //     Doctor account = optionalAccount.get();
-        
-    //     List<GrantedAuthority> grantedAuthority = new ArrayList<>();
-    //     grantedAuthority.add(new SimpleGrantedAuthority("Allow"));
-    //     return new User(account.getEmail(), account.getPassword(), grantedAuthority);
-    // }
+        Doctor doctor = new Doctor();
+        doctor.setEmail(doctorDTO.getEmail());
+        doctor.setName(doctorDTO.getName());
+        doctor.setPassword(doctorDTO.getPassword());
+        doctor.setRole(Roles.DOCTOR.getRole());
+        doctor.setSpecialization(specialization);
+        doctor.setCity(city);
+        return save(doctor);
+    } 
 
     public Optional<Doctor> findOneByEmail(String email) {
         return doctorRepository.findOneByEmailIgnoreCase(email);

@@ -18,7 +18,10 @@ import com.example.springboot101.repositories.DoctorRepository;
 import com.example.springboot101.repositories.PatientRepository;
 import com.example.springboot101.util.constants.AppointmentState;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class AppointmentService {
 
     @Autowired
@@ -35,7 +38,10 @@ public class AppointmentService {
             appointment.setDate(LocalDate.now());   
             appointment.setTime(LocalTime.of(10, 0));   
         }
-            
+
+        log.info("Appointment added : "+appointment.getTime()+" "+appointment.getDate()+" "+ appointment.getDoctor().getName());
+        log.info("Appointment doctor : "+ appointment.getDoctor().getName());
+        log.info("Appointment patient : "+ appointment.getPatient().getName());
         return appointmentRepository.save(appointment);
     }
 
@@ -93,10 +99,9 @@ public class AppointmentService {
         return allSlots;
     }
 
-    private List<LocalTime> generateTimeSlots(LocalTime start, LocalTime end, int intervalMinutes) {
+    public List<LocalTime> generateTimeSlots(LocalTime start, LocalTime end, int intervalMinutes) {
         List<LocalTime> slots = new ArrayList<>();
         LocalTime slot = start;
-        // LocalTime slot1 = LocalTime.of(10, 0);
  
         while (slot.isBefore(end)) {
             slots.add(slot);
