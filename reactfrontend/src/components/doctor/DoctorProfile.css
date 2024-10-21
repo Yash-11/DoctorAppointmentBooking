@@ -1,0 +1,75 @@
+.profile-card {
+    padding: 20px;
+    border: 1px solid;
+    border-radius: 10px;
+    display: flex;
+}
+
+.profile-img {
+
+}
+
+.profile-data-container {
+}
+.services {
+    padding: 20px;
+    border: 1px solid;
+    border-radius: 10px;
+    display: flex;
+}
+.education {
+    padding: 20px;
+    border: 1px solid;
+    border-radius: 10px;
+    display: flex;
+}
+.experience {
+    padding: 20px;
+    border: 1px solid;
+    border-radius: 10px;
+    display: flex;
+}
+
+.appointment-btn{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: rgb(78, 138, 78);
+    color: white;
+    border-radius: 4px;
+}
+
+.appointment-btn:hover{
+    background-color: rgb(56, 97, 56);
+    border: none;
+}
+
+/* .doctor-profile {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .profile-header h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .profile-header p {
+    font-size: 18px;
+    color: #666;
+  }
+  
+  .profile-details p {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  
+  .profile-details strong {
+    font-weight: bold;
+  } */
+  

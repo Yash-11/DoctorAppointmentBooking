@@ -1,5 +1,6 @@
 package com.example.springboot101.models;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,16 +27,33 @@ public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
+
     private String name;
-    // private String phone;
     private String email;
     private String password;
     private String role;
 
-    @ManyToOne
-    @JoinColumn(name = "specialization_id", nullable = false)
-    private Specialization specialization;
+    private int yearsOfExperience;   // Years of experience for the doctor
+    private String address;          // Address of the clinic/hospital
+    private int rating;           // Average rating based on patient reviews
+    private String description;      // A short bio or description about the doctor
+
+    // A doctor can have multiple specializations
+    @ManyToMany
+    @JoinTable(
+      name = "doctor_specialization", 
+      joinColumns = @JoinColumn(name = "doctor_id"), 
+      inverseJoinColumns = @JoinColumn(name = "specialization_id"))
+    private List<Specialization> specializations;
+
+    @ElementCollection
+    private List<String> services;
+
+    @ElementCollection
+    private List<String> educations;
+
+    @ElementCollection
+    private List<String> experiences;
 
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)

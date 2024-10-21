@@ -65,6 +65,7 @@ public class WebSecurityConfig  {
     private static final String[] WHITELIST = {
         "/",
         "/login",
+        "/doctors/**",
         "/authenticate/**",
         "/register_patient",
         "/register_doctor",

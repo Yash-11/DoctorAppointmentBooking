@@ -12,6 +12,7 @@
     "axios": "^1.7.2",
     "my-react-app": "file:",
     "react": "^18.3.1",
+    "react-avatar": "^5.0.3",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.1",
@@ -41,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.14"
   }
 }

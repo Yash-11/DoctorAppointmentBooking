@@ -60,8 +60,9 @@ const DoctorList = () => {
                     <img className='img-fluid rounded-start' src={require('../../assets/profile.png')} alt="Doctor" />
                   </div>
                   <div className="card-body">
-                    <h5 className="card-title">{doctor.name}</h5>
-                    <p className="card-text">Specialization: {doctor.specializationName}</p>
+                    <h5 className="card-title"><Link className='' to={`/doctor/${doctor.id}`}>{doctor.name}</Link></h5>
+                    
+                    <p className="card-text">Specialization: {doctor.specializations[0]}</p>
                     <p className="card-text">City: {doctor.cityName}</p>
 
                   </div>
