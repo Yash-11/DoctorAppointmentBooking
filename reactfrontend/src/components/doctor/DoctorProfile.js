@@ -37,7 +37,7 @@ const DoctorProfile = () => {
       useEffect(() => {
         const fetchDoctor = async () => {
           try {
-            const response = await axios.get(`/doctors/${id}`); // Replace with your API endpoint
+            const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors/${id}`); // Replace with your API endpoint
             console.log(response.data);
 
             setDoctor(response.data);
