@@ -3,9 +3,11 @@ import './Navbar.css'
 import { Link } from 'react-router-dom';
 
 const Navbar = ({ handleLogout }) => {
-  var user;
+  var user=0;
   if (localStorage.getItem('token')) user = 1;
-  else user = null;
+  else user = 0;
+  console.log(user);
+  
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light container-fluid">
       <Link className="navbar-brand" to="/">
@@ -16,9 +18,9 @@ const Navbar = ({ handleLogout }) => {
         />
       </Link>
 
-      <div className="collapse navbar-collapse">
+      <div className=" navbar-collapse">
         <ul className="navbar-nav ml-auto">
-          {!user ? (
+          {user===0 ? (
             <>
               <li className="nav-item">
                 <Link className="nav-link" to="/login">

@@ -6,6 +6,7 @@ import './DoctorList.css';
 import { useUser } from '../context/UserContext';
 import useLogout from '../hooks/useLogout';
 import Navbar from '../navbar/Navbar';
+import Badge from 'react-bootstrap/Badge';
 
 const DoctorList = () => {
   const [doctors, setDoctors] = useState([]);
@@ -45,37 +46,41 @@ const DoctorList = () => {
     <div>
       <Navbar handleLogout={handleLogout} />
 
-      <div className="container mt-5">
-        <h1 className="text-center mb-4 h2heading">Doctors</h1>
+      <div className="mx-auto px-4 py-8">
+        <h1 className="text-center mb-4 h2heading text-4xl">Doctors</h1>
         <hr className="custom-hr mt-3 mb-3"></hr>
 
 
         <div className="row ">
           {doctors.map(doctor => (
             <div key={doctor.id} className="col-md-4 mb-4 mt-4">
-              <div className="card">
-                <div className="card-content">
+              <div className="card h-100">
+                <div className="card-content flex-row h-100">
 
-                  <div className="card-image">
-                    <img className='img-fluid rounded-start' src={require('../../assets/profile.png')} alt="Doctor" />
+                  <div className="card-image relative flex shrink-0 overflow-hidden w-32 h-32">
+                    <img className=' w-full h-full rounded-full object-cover' src={require('../../assets/profile.png')} alt="Doctor" />
                   </div>
-                  <div className="card-body">
-                    <h5 className="card-title"><Link className='' to={`/doctor/${doctor.id}`}>{doctor.name}</Link></h5>
-                    
-                    <p className="card-text">Specialization: {doctor.specializations[0]}</p>
-                    <p className="card-text">City: {doctor.cityName}</p>
+                  <div className="card-body ">
+                    <div className="card-title text-xl font-medium"><Link className='' to={`/doctor/${doctor.id}`}>Dr. {doctor.name}</Link></div>
+                    <div className='flex flex-wrap gap-2 mb-1'>
+                      {doctor.services.map((service, id) => {
+                        return <Badge bg="dark" text="light">{service}</Badge>
+                      })}
+                    </div>
+                    {/* <p className="card-text">Specialization: {doctor.specializations[0]}</p> */}
+                    <p className="card-text">{doctor.address}</p>
 
                   </div>
                   {/* <div className="col-md-8">
                   </div> */}
-                  
+
 
                 </div>
                 <button
-                    className="btn btn-primary"
-                    onClick={() => handleDoctorClick(doctor.id)}>
-                    Book Appointment
-                  </button>
+                  className="btn btn-primary"
+                  onClick={() => handleDoctorClick(doctor.id)}>
+                  Book Appointment
+                </button>
               </div>
             </div>
           ))}

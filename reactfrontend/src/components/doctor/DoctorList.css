@@ -10,14 +10,15 @@ body {
   /* margin: 20px; */
   overflow: hidden;
   display: flex;
-  align-items: center; /* Centers items vertically */
+  padding: 15px;
+  /* align-items: center;  */
   }
-  .card-image {
+  /* .card-image {
     padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+  } */
   .card-body {
     /* Padding inside the card body to space the content well */
     /* padding: 15px; */
