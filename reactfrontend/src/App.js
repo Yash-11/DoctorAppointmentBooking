@@ -30,7 +30,7 @@ function App() {
     <Route path="/register_doctor" element={<DoctorRegister />} />
     <Route path="/form" element={<DoctorAppointmentForm />} />
     <Route path="/payment" element={<PaymentWrapper />} />
-    <Route path="/doctors" element={<AuthRoute role="ROLE_PATIENT"><DoctorList /></AuthRoute>} />
+    <Route path="/doctors" element={<DoctorList />} />
     <Route path="/doctor/:id" element={<DoctorProfile />} />
     <Route path="/appointment/:doctorId" element={<AuthRoute role="ROLE_PATIENT"><AppointmentPage /></AuthRoute>} />
     <Route path="/appointment-booked" element={<AuthRoute role="ROLE_PATIENT"><AppointmentBooked /></AuthRoute>} />

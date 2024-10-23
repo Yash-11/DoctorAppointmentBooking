@@ -1,41 +1,45 @@
 .icon-spacing {
-    margin-right: 10px;
-  }
+  margin-right: 10px;
+}
 
-  .Carousel-container {
-    /* display: flex;  */
-    margin:auto;
-    width: 1100px;
-  }
-  
-  .testimonial {
-    /* margin-right: 100px; */
-    padding: 0 20px;
-    background-color: white;
-  }
+.Carousel-container {
+  /* display: flex;  */
+  margin: auto;
+  width: 1100px;
+}
 
-  .testimonial-card {
-  }
+.testimonial {
+  /* margin-right: 100px; */
+  padding: 0 20px;
+  background-color: white;
+}
 
-  .custom-hr {
-    border: 0;
-    height: 1px;
-    background: #adacac; /* Color of the line */
-    width: 1100px;
-    /* margin: 50px 0; Space above and below the line */
-    margin: auto;
-  }
+.testimonial-card {}
 
-  .submit-button {
-    text-align: center;
-    width: 20%;
-  }
+.custom-hr {
+  border: 0;
+  height: 1px;
+  background: #adacac;
+  /* Color of the line */
+  width: 1100px;
+  /* margin: 50px 0; Space above and below the line */
+  margin: auto;
+}
 
-  .img {
-    background-image: url('homeimg.jpg');
-  }
+.submit-button {
+  text-align: center;
+  width: 20%;
+  background-color: #17a2b8b0;
+}
+.submit-button:hover{
+  background-color: #17a2b8;
+}
 
-  /* .coainnt {
+.img {
+  background-image: url('homeimg.jpg');
+}
+
+/* .coainnt {
     display: flex; 
     gap: 20px; 
   }
@@ -44,30 +48,34 @@
     flex: 1;
   } */
 
-  .coainnt {
-    display: flex; /* Use grid layout */
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
-    gap: 20px; /* Space between the divs */
-    margin:auto;
-    width: 1100px;
-  }
-  .ggg {
-    /* height: 200px; Set height as needed */
-    flex: 1;
-    height: auto;
-    width: 50%;
-  }
+.coainnt {
+  display: flex;
+  /* Use grid layout */
+  grid-template-columns: 1fr 1fr;
+  /* Two equal columns */
+  gap: 20px;
+  /* Space between the divs */
+  margin: auto;
+  width: 1100px;
+}
 
-  .image-container {
-    max-width: 100%; /* Ensures the image does not exceed the width of the div */
-    height: auto; /* Maintains aspect ratio */
-    /* border-radius: 3px; Optional: adds rounded corners to the image */
-  }
+.ggg {
+  /* height: 200px; Set height as needed */
+  flex: 1;
+  height: auto;
+  width: 50%;
+}
 
-  .rrr {
+.image-container {
+  max-width: 100%;
+  /* Ensures the image does not exceed the width of the div */
+  height: auto;
+  /* Maintains aspect ratio */
+  /* border-radius: 3px; Optional: adds rounded corners to the image */
+}
 
-  }
 
-  .h2heading {
-    color: rgb(78, 138, 78);
-  }
+
+.h2heading {
+  color: rgb(78, 138, 78);
+}

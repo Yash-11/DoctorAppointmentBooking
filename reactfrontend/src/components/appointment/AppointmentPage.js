@@ -87,7 +87,7 @@ const AppointmentPage = () => {
       <div className="card mb-4">
         <div className="card-body">
           {/* <h1 className="card-title">Appointment for {doctor.name}</h1> */}
-          <h2 className="h2heading">Appointment for {doctor.name}</h2>
+          <h2 className="h2heading text-4xl">Appointment for {doctor.name}</h2>
           <p className="card-text"><strong>Specialization:</strong> {doctor.specializationName}</p>
           <p className="card-text"><strong>City:</strong> {doctor.cityName}</p>
         </div>

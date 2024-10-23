@@ -20,17 +20,12 @@ const DoctorList = () => {
     const city = queryParams.get('city');
 
     // Fetch doctors from the backend API based on specialization and city
-    axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors?specialization=${specialization}&city=${city}`,
-      {
-        headers: {
-          "Authorization": 'Bearer ' + localStorage.getItem('token')
-        }
-      })
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors?specialization=${specialization}&city=${city}`)
       .then(response => {
         setDoctors(response.data);
       })
       .catch(error => {
-        navigate('/login');
+        // navigate('/login');
         console.error('Error fetching doctors:', error);
       });
   }, [location]);
@@ -52,8 +47,8 @@ const DoctorList = () => {
 
 
         <div className="row ">
-          {doctors.map(doctor => (
-            <div key={doctor.id} className="col-md-4 mb-4 mt-4">
+          {doctors.map((doctor, id) => (
+            <div key={id} className="col-md-4 mb-4 mt-4">
               <div className="card h-100">
                 <div className="card-content flex-row h-100">
 
@@ -63,8 +58,8 @@ const DoctorList = () => {
                   <div className="card-body ">
                     <div className="card-title text-xl font-medium"><Link className='' to={`/doctor/${doctor.id}`}>Dr. {doctor.name}</Link></div>
                     <div className='flex flex-wrap gap-2 mb-1'>
-                      {doctor.services.map((service, id) => {
-                        return <Badge bg="dark" text="light">{service}</Badge>
+                      {doctor.services.map((service, _id) => {
+                        return <Badge key={_id} bg="dark" text="light">{service}</Badge>
                       })}
                     </div>
                     {/* <p className="card-text">Specialization: {doctor.specializations[0]}</p> */}

@@ -41,7 +41,7 @@ const PatientRegister = () => {
     <div>
       <Navbar handleLogout={handleLogout} />
 
-      <h2 className='h2heading mt-4'>Register</h2>
+      <h2 className='h2heading text-4xl mt-4'>Register</h2>
       <hr className="custom-hr mt-4"></hr>
 
       <div className="register-container">
