@@ -123,12 +123,6 @@ public class SeedData implements CommandLineRunner {
         City mumbaiCity = getOrCreateCity("Mumbai");
         City bangaloreCity = getOrCreateCity("Bangalore");
         City kolkataCity = getOrCreateCity("Kolkata");
-        City chennaiCity = getOrCreateCity("Chennai");
-        City puneCity = getOrCreateCity("Pune");
-        City hyderabadCity = getOrCreateCity("Hyderabad");
-        City jaipurCity = getOrCreateCity("Jaipur");
-        City noidaCity = getOrCreateCity("Noida");
-        City gurgaonCity = getOrCreateCity("Gurgaon");
 
         createDoctorIfNotExists("yash1@gmail.com", "Yash",
                 List.of(entSpecialization, dermatologistSpecialization), delhiCity, 5, "Delhi, India", 45,

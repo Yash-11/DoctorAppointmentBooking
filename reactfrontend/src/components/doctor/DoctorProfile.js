@@ -3,10 +3,12 @@ import axios from 'axios';
 import Avatar from 'react-avatar';
 import Badge from 'react-bootstrap/Badge';
 import './DoctorProfile.css'
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const DoctorProfile = () => {
+
+    const navigate = useNavigate();
 
     const _doctor = {
         id: 1,
@@ -86,7 +88,7 @@ const DoctorProfile = () => {
                             </div>
                             {/* <FontAwesomeIcon icon="fa-regular fa-thumbs-up" /> */}
                             <p className="text-muted-foreground mb-4">{doctor.description}</p>
-                            <button type="button" class="appointment-btn">Book Appointment</button>
+                            <button type="button" class="appointment-btn" onClick={()=>{navigate(`/appointment/${doctor.id}`);}}>Book Appointment</button>
 
                         </div>
                     </div>

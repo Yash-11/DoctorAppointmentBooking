@@ -23,6 +23,7 @@ const AppointmentBooked = () => {
         console.log(response.data);
         setAppointments(response.data);
       } catch (error) {
+        handleLogout();
         console.error('Error fetching appointments:', error);
       }
     };
@@ -32,9 +33,9 @@ const AppointmentBooked = () => {
 
   return (
     <div>
-      <Navbar handleLogout={handleLogout} />
+      <Navbar/>
     <div className="container mt-5">
-      <h2 className="text-center mb-4 h2heading">Your Appointments</h2>
+      <div className="text-center mb-4 h2heading text-3xl">Your Appointments</div>
       {appointments.length > 0 ? (
         <div className="list-group">
           {appointments.map(appointment => (

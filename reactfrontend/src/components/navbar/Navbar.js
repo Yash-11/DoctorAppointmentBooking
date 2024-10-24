@@ -1,12 +1,15 @@
 import React from 'react';
 import './Navbar.css'
 import { Link } from 'react-router-dom';
+import useLogout from '../hooks/useLogout';
 
-const Navbar = ({ handleLogout }) => {
+
+const Navbar = () => {
   var user=0;
   if (localStorage.getItem('token')) user = 1;
   else user = 0;
   console.log(user);
+  const handleLogout = useLogout();
   
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light container-fluid">

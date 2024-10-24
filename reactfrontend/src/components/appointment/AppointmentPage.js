@@ -17,25 +17,21 @@ const AppointmentPage = () => {
   const handleLogout = useLogout();
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors/${doctorId}`, 
-      {headers: {
-        "Authorization": 'Bearer ' + localStorage.getItem('token')
-   }})
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors/${doctorId}`)
       .then(response => {
         setDoctor(response.data);
       })
       .catch(error => {
+        handleLogout();
         console.error('Error fetching doctor details:', error);
       });
 
-    axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors/${doctorId}/slots`, 
-      {headers: {
-        "Authorization": 'Bearer ' + localStorage.getItem('token')
-   }})
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/doctors/${doctorId}/slots`)
       .then(response => {
         setSlots(response.data);
       })
       .catch(error => {
+        navigate('/login')
         console.error('Error fetching slots:', error);
       });
   }, [doctorId]);
@@ -65,6 +61,7 @@ const AppointmentPage = () => {
     } catch (error) {
       console.error('Error booking appointment:', error);
       alert('Failed to book appointment');
+      handleLogout();
     }
 
     // try {
@@ -81,7 +78,7 @@ const AppointmentPage = () => {
 
   return (
     <div >
-      <Navbar handleLogout={handleLogout} />
+      <Navbar/>
 
     <div className="container mt-5">
       <div className="card mb-4">

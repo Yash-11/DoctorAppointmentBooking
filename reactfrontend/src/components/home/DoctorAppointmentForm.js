@@ -73,7 +73,7 @@ const DoctorAppointmentForm = () => {
   return (
     <div>
 
-      <Navbar handleLogout={handleLogout} />
+      <Navbar/>
 
       {/* <img src="https://via.placeholder.com/300" alt="Placeholder Image"> */}
       {/* <img src="./homeimg.jpg" alt="MediLink Logo" style={{ height: '50px' }} /> */}

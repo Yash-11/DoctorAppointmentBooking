@@ -39,7 +39,7 @@ const DoctorList = () => {
   return (
 
     <div>
-      <Navbar handleLogout={handleLogout} />
+      <Navbar/>
 
       <div className="mx-auto px-4 py-8">
         <h1 className="text-center mb-4 h2heading text-4xl">Doctors</h1>

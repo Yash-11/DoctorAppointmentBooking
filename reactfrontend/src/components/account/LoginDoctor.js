@@ -36,7 +36,7 @@ const DoctorLogin = () => {
 
   return (
     <div>
-      <Navbar handleLogout={handleLogout} />
+      <Navbar/>
       <div className="login-container">
         <div className="login-box">
           <h2>Doctor Login</h2>

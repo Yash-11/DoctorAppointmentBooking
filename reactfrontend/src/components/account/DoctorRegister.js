@@ -74,7 +74,7 @@ const DoctorRegister = () => {
 
   return (
     <div>
-      <Navbar handleLogout={handleLogout} />
+      <Navbar/>
       <div className="register-container">
         <div className="register-box">
           <h2>Doctor Registration</h2>
